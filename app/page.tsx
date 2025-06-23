@@ -1,5 +1,4 @@
 // app/page.js (for App Router) or pages/index.js (for Pages Router)
-import Image from "next/image";
 import Card from "@/components/Card"; // Adjust path if necessary
 import Link from "next/link";
 
