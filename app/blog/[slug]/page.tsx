@@ -227,9 +227,8 @@ interface BlogDetailPageProps {
 }
 
 // Corrected: Removed 'await' from the params destructuring
-const BlogDetailPage = async ({ params }: BlogDetailPageProps) => {
-  const { slug } = params; // <-- CHANGE IS HERE: Removed 'await'
-
+const BlogDetailPage = ({ params }: BlogDetailPageProps) => {
+  const { slug } = params;
   // Find the blog post that matches the slug
   const post = blogPosts.find((p) => p.slug === slug);
 
