@@ -203,8 +203,7 @@ const blogPosts = [
       </ol>
       <p>Building accessible websites is not just about compliance; it's about building a better web for everyone.</p>
     `,
-    imageUrl:
-      "https://imgs.search.brave.com/lm4wtR5eR6df7vaykOaV8wC8UkVO3JmJxLM5ND1_1V0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aW50/LmNyZWF0aXZlbWFy/a2V0LmNvbS9abndz/b2I0bzhrRlVkVlNN/MlFzU1JSQUZPVmxM/blI3Zkk0M0NyN2ZU/UVZVL3dpZHRoOjQ0/MC9oZWlnaHQ6Mjky/L2dyYXZpdHk6bm93/ZS9ydDpmaWxsLWRv/d24vZWw6MS9jek02/THk5bWFXeGxjeTVq/Y21WaGRHbDJaVzFo/Y210bGRDNWpiMjB2/YVcxaFoyVnpMM05q/Y21WbGJuTm9iM1J6/TDNCeWIyUjFZM1J6/THpVd09ERXZOVEE0/TVRjdk5UQTRNVGM0/TnpNdlkyRm1aUzF3/bW1WMmFXVjNMVEEx/TFc4dWFuQm5JekUz/TVRZek56Y3pNakU_/MTcxNjM3NzMyMQ",
+    imageUrl:"https://imgs.search.brave.com/4gX9FhcxKwDaF2azsSpmZYO1n60-qNlKwvXRv237Uok/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by93/ZWItdGVtcGxhdGUt/d2Vic2l0ZS1kZXNp/Z24tY29uY2VwdF81/Mzg3Ni0xMjU2MDgu/anBnP3NlbXQ9YWlz/X2h5YnJpZCZ3PTc0/MA",
     slug: "building-accessible-websites",
     author: "Diana Prince",
     date: "May 22, 2024",
