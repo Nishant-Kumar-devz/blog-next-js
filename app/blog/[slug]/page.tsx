@@ -226,8 +226,9 @@ interface BlogDetailPageProps {
   };
 }
 
+// Corrected: Removed 'await' from the params destructuring
 const BlogDetailPage = async ({ params }: BlogDetailPageProps) => {
-  const { slug } = params;
+  const { slug } = params; // <-- CHANGE IS HERE: Removed 'await'
 
   // Find the blog post that matches the slug
   const post = blogPosts.find((p) => p.slug === slug);
@@ -280,11 +281,11 @@ const BlogDetailPage = async ({ params }: BlogDetailPageProps) => {
         {/* Blog Post Content (using dangerouslySetInnerHTML) */}
         <div
           className="prose prose-invert prose-lg text-gray-700 dark:text-gray-300 max-w-none
-                     prose-h2:text-blue-200 dark:prose-h2:text-blue-300
-                     prose-h3:text-purple-200 dark:prose-h3:text-purple-300
-                     prose-ul:list-disc prose-ul:pl-5
-                     prose-ol:list-decimal prose-ol:pl-5
-                     prose-li:my-1"
+                       prose-h2:text-blue-200 dark:prose-h2:text-blue-300
+                       prose-h3:text-purple-200 dark:prose-h3:text-purple-300
+                       prose-ul:list-disc prose-ul:pl-5
+                       prose-ol:list-decimal prose-ol:pl-5
+                       prose-li:my-1"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
@@ -293,7 +294,7 @@ const BlogDetailPage = async ({ params }: BlogDetailPageProps) => {
           <Link
             href="/blog"
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full transition duration-300 shadow-lg
-                     dark:bg-blue-700 dark:hover:bg-blue-800">
+                       dark:bg-blue-700 dark:hover:bg-blue-800">
             Back to Blog Posts
           </Link>
         </div>
