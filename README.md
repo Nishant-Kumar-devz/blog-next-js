@@ -26,11 +26,22 @@ Light & dark themes + mouse effect demo:
 | --------------------------------------------------------------------- | ------------------------------------------------------------------- |
 | ![Light Screenshot](./public/blog-next-js-beige.vercel.app_.png) | ![Dark Screenshot](./public/blog-next-js-beige.vercel.app_%20(5).png) |
 
-The site layout in action:
+
+## The site layout in action
+
+## Home
 ![Website Screenshot](./public/blog-next-js-beige.vercel.app_.png)
+
+## Blogs
 ![Website Screenshot](<./public/blog-next-js-beige.vercel.app_%20(1).png>)
+
+## Blog
 ![Website Screenshot](<./public/blog-next-js-beige.vercel.app_%20(4).png>)
+
+## About
 ![Website Screenshot](<./public/blog-next-js-beige.vercel.app_%20(2).png>)
+
+## Contact
 ![Website Screenshot](<./public/blog-next-js-beige.vercel.app_%20(3).png>)
 
 
