@@ -211,24 +211,17 @@ const blogPosts = [
   },
 ];
 
-// This function tells Next.js which paths to pre-render at build time (SSG)
-export async function generateStaticParams() {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }));
-}
-
-// The dynamic page component
-// It receives 'params' containing the dynamic segments (e.g., { slug: 'post-title' })
+// export async function generateStaticParams() {
+//   return blogPosts.map((post) => ({
+//     slug: post.slug,
+//   }));
+// }
 interface BlogDetailPageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
 }
-
-// Corrected: Removed 'await' from the params destructuring
-const BlogDetailPage = ({ params }: BlogDetailPageProps) => {
-  const { slug } = params;
+// Make sure this is NOT async (unless you're doing async stuff inside it)
+const BlogDetailPage = async ({ params }: BlogDetailPageProps) => {
+  const { slug } = await params;
   // Find the blog post that matches the slug
   const post = blogPosts.find((p) => p.slug === slug);
 
