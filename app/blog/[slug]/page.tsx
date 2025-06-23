@@ -227,7 +227,7 @@ interface BlogDetailPageProps {
 }
 
 const BlogDetailPage = async ({ params }: BlogDetailPageProps) => {
-  const { slug } = await params;
+  const { slug } = params;
 
   // Find the blog post that matches the slug
   const post = blogPosts.find((p) => p.slug === slug);
