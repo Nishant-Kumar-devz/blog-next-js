@@ -18,10 +18,10 @@ const ContactPage = () => {
         <div className="mb-8">
           <p className="text-lg sm:text-xl font-semibold mb-2">Email Us:</p>
           <a
-            href="mailto:info@mydevblog.com"
+            href="mailto:nishantkumardevz@gmail.com"
             className="text-blue-400 hover:text-blue-700 transition duration-300 text-xl font-medium">
             {/* Adjusted hover state for better dark mode blend */}
-            info@mydevblog.com
+            nishantkumardevz@gmail.com
           </a>
         </div>
 
@@ -30,18 +30,25 @@ const ContactPage = () => {
           <div className="flex justify-center space-x-6 text-2xl">
             {/* Placeholder for social media icons - replace with actual links/icons */}
             <a
-              href="#"
+              href="https://x.com/Nishantkumardev?t=OO_cRn6rt7Vavsn1_-A-GA&s=09"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-blue-300 transition duration-300">
               {/* Adjusted hover to a subtle blue in dark mode */}
               {/* Replace with actual social media icon from react-icons/fa */}
-              <i className="fab fa-twitter"></i> Twitter (Placeholder)
+              <i className="fab fa-twitter"></i> Twitter
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/nishant-kumar-9b5a502b0?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-blue-300 transition duration-300">
               {/* Adjusted hover to a subtle blue in dark mode */}
               {/* Replace with actual social media icon */}
-              <i className="fab fa-linkedin"></i> LinkedIn (Placeholder)
+              <i className="fab fa-linkedin"></i> LinkedIn
+            </a>
+            <a
+              href="https://github.com/Nishant-Kumar-devz"
+              className="text-gray-500 hover:text-gray-900 dark:hover:text-blue-300 transition duration-300">
+              {/* Adjusted hover to a subtle blue in dark mode */}
+              {/* Replace with actual social media icon */}
+              <i className="fab fa-github"></i> Github
             </a>
           </div>
         </div>
