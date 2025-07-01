@@ -5,7 +5,6 @@ import { Types } from "mongoose"; // Import Types for ObjectId
 import { NextResponse } from "next/server";
 import connectMongodb from "@/lib/mongodb";
 import { generateToken } from "@/lib/generateToken"; // Assuming this is for your custom JWT logic
-import { ok } from "assert";
 
 // Function to handle user login
 export async function POST(request: Request) {
@@ -69,7 +68,7 @@ export async function POST(request: Request) {
 
     // Create a response and set the token (e.g., in a header or cookie)
     // IMPORTANT: Never send the password hash back to the frontend
-    const { password: _, ...userData } = existingUser.toObject(); // .toObject() safely converts Mongoose doc to plain JS object
+    const {  ...userData } = existingUser.toObject(); // .toObject() safely converts Mongoose doc to plain JS object
 
     const response = NextResponse.json(
       { message: "Login successful", user: userData, token, ok: true },
