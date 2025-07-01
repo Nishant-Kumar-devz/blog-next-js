@@ -33,7 +33,6 @@ const DashboardPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-
     const checkAuthAndLoadData = async () => {
       const token = localStorage.getItem("authToken");
 
@@ -142,10 +141,13 @@ const DashboardPage = () => {
           A Navbar with p-4 often means ~64px height. pt-16 (64px) should be enough,
           but pt-20 (80px) adds a little more breathing room below the Navbar.
           You might need to fine-tune this based on your actual Navbar's height. */}
-      <main className="container mx-auto pt-20 px-6 sm:px-8 pb-6 sm:pb-8">
+      <main
+        className="container mx-auto pt-20 px-6 sm:px-8 pb-6 sm:pb-8 bg-gradient-to-br from-indigo-100 via-purple-500 to-pink-500
+                     dark:from-black dark:via-black dark:to-black
+                     overflow-hidden text-white dark:text-gray-100">
         {" "}
         {/* UPDATED LINE */}
-        <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 leading-tight drop-shadow-md">
+        <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-700 leading-tight drop-shadow-md">
           Welcome, {userName || userEmail}!
         </h2>
         <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mb-6 drop-shadow-sm">

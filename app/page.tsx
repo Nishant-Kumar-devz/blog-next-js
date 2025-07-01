@@ -74,13 +74,21 @@ const blogPosts = [
 
 export default function Home() {
   return (
-    <main className="relative z-10 min-h-screen px-4 sm:px-8 py-3 pb-20 text-white dark:text-gray-100">
+    <main
+      className="relative min-h-screen px-4 sm:px-8 py-3 pb-20
+                     bg-gradient-to-br from-indigo-100 via-purple-500 to-pink-500
+                     dark:from-black dark:via-black dark:to-black
+                     overflow-hidden text-white dark:text-gray-100">
+      {/* Background circles for visual interest (matching signin and signup) */}
+      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
       {/* Hero Section */}
       <section className="text-center mb-16 pt-24 sm:pt-32 max-w-3xl mx-auto">
-        <h1 className="text-5xl sm:text-6xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 leading-tight">
+        <h1 className="text-5xl sm:text-6xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-700 leading-tight">
           Welcome to MyDev Blog
         </h1>
-        <p className="text-lg sm:text-xl text-gray-500 dark:text-gray-600 mb-8">
+        <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-600 mb-8">
           Your go-to source for insights into web development, programming, and
           tech trends. Stay updated with our latest articles and tutorials.
         </p>

@@ -41,7 +41,7 @@ const Navbar = () => {
       // Clean up the event listener when the component unmounts
       window.removeEventListener("storage", checkAuthStatus);
     };
-  }, [pathname]); // <-- KEY CHANGE: Added pathname to the dependency array
+  }, [pathname]); // KEY CHANGE: Added pathname to the dependency array
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -135,19 +135,25 @@ const Navbar = () => {
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 shadow-md drop-shadow-sm">
+                className="relative px-5 py-2 group overflow-hidden font-semibold rounded-lg text-white text-md shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-0.5
+                           bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700
+                           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 dark:focus:ring-pink-400">
                 Logout
               </button>
             ) : (
               <>
                 <Link
                   href="/auth/signin"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 shadow-md drop-shadow-sm">
+                  className="relative px-5 py-2 group overflow-hidden font-semibold rounded-lg text-white text-md shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-0.5
+                             bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700
+                             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 dark:focus:ring-purple-400">
                   Sign In
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300 shadow-md drop-shadow-sm">
+                  className="relative px-5 py-2 group overflow-hidden font-semibold rounded-lg text-white text-md shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-0.5
+                             bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700
+                             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400 dark:focus:ring-teal-400">
                   Sign Up
                 </Link>
               </>
@@ -212,13 +218,15 @@ const Navbar = () => {
               <>
                 <Link
                   href="/auth/signin"
-                  className={mobileLinkClass("/auth/signin")}
+                  className="w-full text-center block px-4 py-2 font-semibold rounded-md text-white text-md shadow-md
+                             bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition duration-300"
                   onClick={toggleMenu}>
                   Sign In
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className={mobileLinkClass("/auth/signup")}
+                  className="w-full text-center block px-4 py-2 font-semibold rounded-md text-white text-md shadow-md
+                             bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 transition duration-300"
                   onClick={toggleMenu}>
                   Sign Up
                 </Link>
@@ -226,7 +234,8 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={handleLogout}
-                className="w-full px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 shadow-md drop-shadow-sm">
+                className="w-full px-4 py-2 font-semibold rounded-md text-white text-md shadow-md
+                           bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 transition duration-300">
                 Logout
               </button>
             )}

@@ -7,7 +7,7 @@ const Card = ({ title, description, imageUrl, slug, author, date }) => {
     <Link href={`/blog/${slug}`} className="block">
       <div
         className="relative overflow-hidden rounded-lg shadow-xl transform transition-all duration-300 hover:scale-[1.02] cursor-pointer
-                   backdrop-filter backdrop-blur-md bg-white bg-opacity-10 dark:bg-black dark:bg-opacity-20 border border-white border-opacity-20 dark:border-gray-700 dark:border-opacity-30
+                   backdrop-filter backdrop-blur-md bg-indigo-300 dark:bg-black dark:bg-opacity-20 border border-indigo-400 dark:border-indigo-900 border-opacity-20 dark:border-gray-00 dark:border-opacity-30
                    flex flex-col h-full">
         {/* Card Image */}
         <div className="relative w-full h-48 sm:h-56 overflow-hidden rounded-t-lg">
@@ -31,19 +31,19 @@ const Card = ({ title, description, imageUrl, slug, author, date }) => {
               {/* Adjusted dark hover */}
               {title}
             </h3>
-            <p className="text-gray-400 dark:text-gray-400 text-sm mb-4 line-clamp-3">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
               {" "}
               {/* Adjusted dark text */}
               {description}
             </p>
           </div>
           {/* Metadata */}
-          <div className="flex justify-between items-center text-xs text-gray-400 dark:text-gray-500 mt-4">
+          <div className="flex justify-between items-center text-xs text-gray-600 dark:text-gray-500 mt-4">
             {" "}
             {/* Adjusted dark text */}
             <span>
               By{" "}
-              <span className="font-medium text-gray-500 dark:text-gray-300">
+              <span className="font-medium text-gray-900 dark:text-gray-600">
                 {author}
               </span>
             </span>{" "}

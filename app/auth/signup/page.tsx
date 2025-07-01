@@ -58,7 +58,7 @@ export default function SignUpPage() {
       // --- Registration Successful ---
       console.log("User registered successfully:", data.user);
       // Redirect to the login page after successful registration
-      router.push("/auth/signin"); // Add query param for optional message
+      router.push("/auth/signin?registered=true"); // Add query param for optional message
     } catch (err) {
       console.error("Sign up error:", err);
       setError("An unexpected error occurred. Please try again later.");
@@ -68,32 +68,39 @@ export default function SignUpPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold text-center mb-6 text-gray-900 dark:text-gray-100">
-          Sign Up
+    <main className="pt-24 min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 dark:from-gray-900 dark:via-purple-900 dark:to-blue-900 relative overflow-hidden">
+      {/* Background circles for visual interest (same as signin) */}
+      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div className="absolute top-1/2 right-1/4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+
+      {/* Form Container - Glassmorphism style (same as signin) */}
+      <div className="w-full max-w-md p-8 rounded-xl shadow-2xl relative z-10 backdrop-filter backdrop-blur-lg  bg-opacity-10 dark:bg-black dark:bg-opacity-20 border border-blue-900 border-opacity-20 dark:border-gray-700 dark:border-opacity-30 transform transition-all duration-300 hover:scale-[1.01]">
+        <h1 className="text-3xl font-extrabold text-center mb-8 text-black dark:text-white drop-shadow-lg">
+          Join Us!
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Name (Optional)
+              className="block text-sm font-semibold text-black dark:text-gray-200 mb-2">
+              Name
             </label>
             <input
               type="text"
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+              className="mt-1 block w-full px-4 py-2 bg-black bg-opacity-20 dark:bg-gray-800 dark:bg-opacity-40 border border-blue-700 border-opacity-30 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 placeholder-white placeholder-opacity-70 text-white dark:text-white transition-colors duration-200"
+              placeholder="Your Name"
               disabled={loading}
             />
           </div>
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Email
+              className="block text-sm font-semibold text-black dark:text-gray-200 mb-2">
+              Email Address
             </label>
             <input
               type="email"
@@ -101,14 +108,15 @@ export default function SignUpPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+              className="mt-1 block w-full px-4 py-2 bg-black bg-opacity-20 dark:bg-gray-800 dark:bg-opacity-40 border border-blue-700 border-opacity-30 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 placeholder-white placeholder-opacity-70 text-white dark:text-white transition-colors duration-200"
+              placeholder="your@example.com"
               disabled={loading}
             />
           </div>
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              className="block text-sm font-semibold text-black dark:text-gray-200 mb-2">
               Password
             </label>
             <input
@@ -117,14 +125,15 @@ export default function SignUpPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+              className="mt-1 block w-full px-4 py-2 bg-black bg-opacity-20 dark:bg-gray-800 dark:bg-opacity-40 border border-blue-700 border-opacity-30 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 placeholder-white placeholder-opacity-70 text-white dark:text-white transition-colors duration-200"
+              placeholder="••••••••"
               disabled={loading}
             />
           </div>
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              className="block text-sm font-semibold text-black dark:text-gray-200 mb-2">
               Confirm Password
             </label>
             <input
@@ -133,24 +142,29 @@ export default function SignUpPage() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+              className="mt-1 block w-full px-4 py-2 bg-black bg-opacity-20 dark:bg-gray-800 dark:bg-opacity-40 border border-blue-700 border-opacity-30 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 placeholder-white placeholder-opacity-70 text-white dark:text-white transition-colors duration-200"
+              placeholder="••••••••"
               disabled={loading}
             />
           </div>
-          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+          {error && (
+            <p className="text-red-200 text-sm mt-2 text-center drop-shadow-md">
+              {error}
+            </p>
+          )}
           <button
             type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 dark:bg-green-700 dark:hover:bg-green-800"
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-lg text-lg font-semibold text-white bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400 dark:focus:ring-teal-400 transition transform hover:-translate-y-0.5 duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={loading} // Disable button when loading
           >
             {loading ? "Registering..." : "Sign Up"}
           </button>
         </form>
-        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-          Already have an account?{" "}
+        <p className="mt-8 text-center text-sm text-gray-600 dark:text-gray-300 drop-shadow-md">
+          Already have an account? &nbsp;
           <Link
             href="/auth/signin"
-            className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+            className="font-bold text-blue-400 hover:text-blue-900 dark:text-purple-300 dark:hover:text-purple-200 transition-colors duration-200 underline">
             Sign In
           </Link>
         </p>
