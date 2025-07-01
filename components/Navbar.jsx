@@ -2,25 +2,46 @@
 "use client";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes, FaSun, FaMoon } from "react-icons/fa";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const homePage = "/";
 
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState("light"); // Local state for immediate UI feedback
+  const [theme, setTheme] = useState("light");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // This effect synchronizes local state with the actual DOM class and localStorage
-  // It runs AFTER the initial render, so the inline script in layout.jsx handles the very first load.
+  // Function to check auth status and update state
+  const checkAuthStatus = () => {
+    const token = localStorage.getItem("authToken");
+    setIsLoggedIn(!!token);
+  };
+
   useEffect(() => {
+    // Initial theme setup
     const currentTheme = document.documentElement.classList.contains("dark")
       ? "dark"
       : "light";
-    setTheme(currentTheme); // Initialize theme state from actual DOM
-  }, []);
+    setTheme(currentTheme);
+
+    // Check auth status:
+    // 1. On initial mount.
+    // 2. Whenever the 'pathname' (URL route) changes, which happens after login redirect.
+    checkAuthStatus();
+
+    // Listen for storage changes from OTHER tabs/windows.
+    // This listener catches changes if the user logs in/out from a different browser tab.
+    window.addEventListener("storage", checkAuthStatus);
+
+    return () => {
+      // Clean up the event listener when the component unmounts
+      window.removeEventListener("storage", checkAuthStatus);
+    };
+  }, [pathname]); // <-- KEY CHANGE: Added pathname to the dependency array
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -28,10 +49,9 @@ const Navbar = () => {
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme); // Update local state
-    localStorage.setItem("theme", newTheme); // Persist to localStorage
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
 
-    // Manually toggle class on <html> to ensure immediate visual update
     if (newTheme === "dark") {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
@@ -41,65 +61,97 @@ const Navbar = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    setIsLoggedIn(false);
+    setIsOpen(false);
+    router.push("/auth/signin");
+  };
+
+  const navBgColor =
+    theme === "dark" ? "rgba(0, 0, 0, 0.4)" : "rgba(255, 255, 255, 0.2)";
+
+  const linkClass = (path) =>
+    cn(
+      pathname === path
+        ? "text-blue-600 dark:text-red-300 transition duration-300 text-lg font-medium relative group drop-shadow-sm"
+        : "text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition duration-300 text-lg font-medium relative group drop-shadow-sm"
+    );
+
+  const mobileLinkClass = (path) =>
+    cn(
+      pathname === path
+        ? "block text-blue-600 dark:text-red-300 px-4 py-2 text-lg transition duration-300 drop-shadow-sm"
+        : "block hover:text-black dark:hover:text-white px-4 py-2 text-lg transition duration-300 drop-shadow-sm"
+    );
+
   return (
     <div className="fixed top-0 left-0 w-full z-50">
-      {/* MovingBackground is now handled in layout.jsx or its visibility controlled by dark:block */}
       <nav
         className="relative z-10 p-4 shadow-lg"
         style={{
           backdropFilter: "blur(10px) saturate(180%)",
           WebkitBackdropFilter: "blur(10px) saturate(180%)",
-          backgroundColor: "rgba(255, 255, 255, 0.1)", // Base for glass, adjust for dark if needed
-        //   border: "1px solid rgba(255, 255, 255, 0.2)",
+          backgroundColor: navBgColor,
         }}>
         <div className="container mx-auto flex justify-between items-center relative">
-          <div className="text-black dark:text-white text-3xl font-extrabold tracking-wide z-10 ">
+          <div className="text-black dark:text-white text-3xl font-extrabold tracking-wide z-10 drop-shadow-md">
             <Link href="/">MyBlog</Link>
           </div>
 
           <div className="hidden md:flex justify-center flex-grow">
             <div className="space-x-8">
-              <Link
-                href="/"
-                className={cn(
-                  pathname === homePage
-                    ? "text-blue-600 dark:text-red-300 transition duration-300 text-lg font-medium relative group"
-                    : "text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition duration-300 text-lg font-medium relative group"
-                )}>
+              <Link href="/" className={linkClass(homePage)}>
                 Home
                 <span className="absolute left-0 bottom-0 w-full h-0.5 bg-black dark:bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </Link>
-              <Link
-                href="/blog"
-                className={cn(
-                  pathname === "/blog"
-                    ? "text-blue-600 dark:text-red-300 transition duration-300 text-lg font-medium relative group"
-                    : "text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition duration-300 text-lg font-medium relative group"
-                )}>
+              <Link href="/blog" className={linkClass("/blog")}>
                 Blog
                 <span className="absolute left-0 bottom-0 w-full h-0.5 bg-black dark:bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </Link>
-              <Link
-                href="/about"
-                className={cn(
-                  pathname === "/about"
-                    ? "text-blue-600 dark:text-red-300 transition duration-300 text-lg font-medium relative group"
-                    : "text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition duration-300 text-lg font-medium relative group"
-                )}>
+              <Link href="/about" className={linkClass("/about")}>
                 About
                 <span className="absolute left-0 bottom-0 w-full h-0.5 bg-black dark:bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </Link>
-              <Link
-                href="/contact"
-                className={cn(
-                  pathname === "/contact"
-                    ? "text-blue-600 dark:text-red-300 transition duration-300 text-lg font-medium relative group"
-                    : "text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition duration-300 text-lg font-medium relative group"
-                )}>
+              <Link href="/contact" className={linkClass("/contact")}>
                 Contact
                 <span className="absolute left-0 bottom-0 w-full h-0.5 bg-black dark:bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </Link>
+              {isLoggedIn && (
+                <Link href="/dashboard" className={linkClass("/dashboard")}>
+                  Dashboard
+                  <span className="absolute left-0 bottom-0 w-full h-0.5 bg-black dark:bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </Link>
+              )}
             </div>
+          </div>
+
+          <div className="hidden md:flex items-center space-x-4 z-10">
+            <button
+              onClick={toggleTheme}
+              className="text-black dark:text-white focus:outline-none">
+              {theme === "light" ? <FaMoon size={24} /> : <FaSun size={24} />}
+            </button>
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 shadow-md drop-shadow-sm">
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  href="/auth/signin"
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 shadow-md drop-shadow-sm">
+                  Sign In
+                </Link>
+                <Link
+                  href="/auth/signup"
+                  className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300 shadow-md drop-shadow-sm">
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
 
           <div className="flex items-center md:hidden z-10 space-x-4">
@@ -114,65 +166,70 @@ const Navbar = () => {
               {isOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
             </button>
           </div>
-
-          <div className="hidden md:block z-10">
-            <button
-              onClick={toggleTheme}
-              className="text-black dark:text-white focus:outline-none">
-              {theme === "light" ? <FaMoon size={24} /> : <FaSun size={24} />}
-            </button>
-          </div>
         </div>
 
         {isOpen && (
           <div
-            className="md:hidden bg-gray-800 dark:bg-gray-900 text-gray-500 dark:text-gray-300 mt-4 py-4 space-y-4 text-center rounded-lg shadow-xl animate-fade-in"
+            className="md:hidden mt-4 py-4 space-y-4 text-center rounded-lg shadow-xl animate-fade-in"
             style={{
               backdropFilter: "blur(10px) saturate(180%)",
               WebkitBackdropFilter: "blur(10px) saturate(180%)",
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-            //   border: "1px solid rgba(255, 255, 255, 0.2)",
+              backgroundColor: navBgColor,
             }}>
             <Link
               href="/"
-              className={cn(
-                pathname === homePage
-                  ? "block text-blue-600 dark:text-red-300 px-4 py-2 text-lg transition duration-300"
-                  : "block hover:text-black dark:hover:text-white px-4 py-2 text-lg transition duration-300"
-              )}
+              className={mobileLinkClass(homePage)}
               onClick={toggleMenu}>
               Home
             </Link>
             <Link
               href="/blog"
-              className={cn(
-                pathname === "/blog"
-                  ? "block text-blue-600 dark:text-red-300 px-4 py-2 text-lg transition duration-300"
-                  : "block hover:text-black dark:hover:text-white px-4 py-2 text-lg transition duration-300"
-              )}
+              className={mobileLinkClass("/blog")}
               onClick={toggleMenu}>
               Blog
             </Link>
             <Link
               href="/about"
-              className={cn(
-                pathname === "/about"
-                  ? "block text-blue-600 dark:text-red-300 px-4 py-2 text-lg transition duration-300"
-                  : "block hover:text-black dark:hover:text-white px-4 py-2 text-lg transition duration-300"
-              )}
+              className={mobileLinkClass("/about")}
               onClick={toggleMenu}>
               About
             </Link>
             <Link
               href="/contact"
-              className={cn(
-                pathname === "/contact"
-                  ? "block text-blue-600 dark:text-red-300 px-4 py-2 text-lg transition duration-300"
-                  : "block hover:text-black dark:hover:text-white px-4 py-2 text-lg transition duration-300"
-              )}
+              className={mobileLinkClass("/contact")}
               onClick={toggleMenu}>
               Contact
             </Link>
+            {isLoggedIn && (
+              <Link
+                href="/dashboard"
+                className={mobileLinkClass("/dashboard")}
+                onClick={toggleMenu}>
+                Dashboard
+              </Link>
+            )}
+            {!isLoggedIn ? (
+              <>
+                <Link
+                  href="/auth/signin"
+                  className={mobileLinkClass("/auth/signin")}
+                  onClick={toggleMenu}>
+                  Sign In
+                </Link>
+                <Link
+                  href="/auth/signup"
+                  className={mobileLinkClass("/auth/signup")}
+                  onClick={toggleMenu}>
+                  Sign Up
+                </Link>
+              </>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="w-full px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 shadow-md drop-shadow-sm">
+                Logout
+              </button>
+            )}
           </div>
         )}
       </nav>

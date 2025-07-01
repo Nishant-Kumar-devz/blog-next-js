@@ -6,50 +6,73 @@ import React, { useState, useEffect } from "react";
 const MouseGlow = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMounted, setIsMounted] = useState(false); // To prevent SSR issues
+  const [isMouseDevice, setIsMouseDevice] = useState(false); // New state to track if it's a mouse-enabled device
 
   useEffect(() => {
     setIsMounted(true); // Component is mounted on the client
+
+    // Detect if the device has a fine pointer (mouse)
+    // 'pointer: fine' indicates a mouse or stylus
+    // 'any-pointer: fine' covers cases where primary input is touch but a mouse is also connected
+    const mediaQuery = window.matchMedia(
+      "(pointer: fine) and (any-pointer: fine)"
+    );
+
+    const checkPointerType = () => {
+      setIsMouseDevice(mediaQuery.matches);
+    };
+
+    // Initial check
+    checkPointerType();
+
+    // Listen for changes in pointer capabilities (e.g., connecting/disconnecting a mouse)
+    mediaQuery.addEventListener("change", checkPointerType);
 
     const handleMouseMove = (e) => {
       // Update position based on mouse coordinates
       setPosition({ x: e.clientX, y: e.clientY });
     };
 
-    // Add event listener when component mounts
-    window.addEventListener("mousemove", handleMouseMove);
+    // Only add mousemove listener if it's detected as a mouse device
+    if (isMouseDevice) {
+      window.addEventListener("mousemove", handleMouseMove);
+    }
 
-    // Clean up event listener when component unmounts
+    // Clean up event listeners when component unmounts or pointer type changes
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      mediaQuery.removeEventListener("change", checkPointerType);
     };
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, [isMouseDevice]); // Re-run effect if isMouseDevice changes
 
   // Don't render on the server, only when mounted on the client
-  if (!isMounted) {
+  // Also, don't render if it's not a mouse-enabled device
+  if (!isMounted || !isMouseDevice) {
     return null;
   }
 
+  // Define the blue-600 equivalent color with adjusted opacity for the glow.
+  // Tailwind's blue-600 is #2563EB. We'll use its RGB values.
+  // Using a lower opacity (e.g., 0.2) for a very subtle effect.
+  const subtleBlue = "rgba(37, 99, 235, 1)"; // blue-600 with 100% opacity for the initial color
+  const transparent = "transparent";
+
+  // Creating a radial gradient from the subtle blue to transparent
+  // Make sure the transparent part covers a larger portion for a softer fade
+  const glowBackground = `radial-gradient(circle, ${subtleBlue} 0%, ${transparent} 70%)`;
+
   return (
     <div
-      className="fixed inset-0 pointer-events-none z-[9999]" // High z-index to be on top, pointer-events-none to not interfere with clicks
+      className="fixed inset-0 pointer-events-none z-[9999]"
       style={{
-        // Position the glow slightly offset so the cursor is not directly on the center
-        // Using transform for better performance than top/left
-        transform: `translate(${position.x - 15}px, ${position.y - 15}px)`, // Adjusted offset for 30px size
-        // Style for the glow effect
-        width: "30px", // Base size
-        height: "30px",
+        transform: `translate(${position.x - 10}px, ${position.y - 9}px)`,
+        width: "20px",
+        height: "20px",
         borderRadius: "50%",
-        // Increased opacity in rgba values and potentially adjusted colors for a darker feel
-        background:
-          "radial-gradient(circle, rgba(100,149,237,0.9) 0%, rgba(75,0,130,0.9) 50%, transparent 70%)",
-        // Adjusted colors: 100,149,237 (Cornflower Blue) and 75,0,130 (Dark Orchid) - these are darker shades
-        // Opacity increased to 0.9 from 0.8/0.7
-        filter: "blur(10px)", // Slightly increased blur for a softer, more diffused glow
-        opacity: 0.95, // Overall opacity of the div increased for a darker, more prominent effect
-        transition:
-          "transform 0.05s ease-out, width 0.1s ease-out, height 0.1s ease-out", // Reduced transform transition duration for higher speed
-        // The scale(1.2) is already applied by you, so keeping it
+        background: glowBackground,
+        filter: "blur(10px)", // Maintained high blur for diffused effect
+        opacity: 0.2, // Overall opacity of the div, making the blue more subtle
+        transition: "transform 0.05s ease-out",
       }}
     />
   );

@@ -8,8 +8,7 @@ const Card = ({ title, description, imageUrl, slug, author, date }) => {
       <div
         className="relative overflow-hidden rounded-lg shadow-xl transform transition-all duration-300 hover:scale-[1.02] cursor-pointer
                    backdrop-filter backdrop-blur-md bg-white bg-opacity-10 dark:bg-black dark:bg-opacity-20 border border-white border-opacity-20 dark:border-gray-700 dark:border-opacity-30
-                   flex flex-col h-full"
-      >
+                   flex flex-col h-full">
         {/* Card Image */}
         <div className="relative w-full h-48 sm:h-56 overflow-hidden rounded-t-lg">
           <Image
@@ -23,19 +22,32 @@ const Card = ({ title, description, imageUrl, slug, author, date }) => {
         </div>
 
         {/* Card Content */}
-        <div className="p-5 flex-grow flex flex-col justify-between text-black dark:text-gray-100"> {/* Default text to white, dark mode to light gray */}
+        <div className="p-5 flex-grow flex flex-col justify-between text-black dark:text-gray-100">
+          {" "}
+          {/* Default text to white, dark mode to light gray */}
           <div>
-            <h3 className="text-2xl font-bold mb-2 leading-tight group-hover:text-blue-300 dark:group-hover:text-blue-400 transition-colors duration-300"> {/* Adjusted dark hover */}
+            <h3 className="text-2xl font-bold mb-2 leading-tight group-hover:text-blue-300 dark:group-hover:text-blue-400 transition-colors duration-300">
+              {" "}
+              {/* Adjusted dark hover */}
               {title}
             </h3>
-            <p className="text-gray-400 dark:text-gray-400 text-sm mb-4 line-clamp-3"> {/* Adjusted dark text */}
+            <p className="text-gray-400 dark:text-gray-400 text-sm mb-4 line-clamp-3">
+              {" "}
+              {/* Adjusted dark text */}
               {description}
             </p>
           </div>
-
           {/* Metadata */}
-          <div className="flex justify-between items-center text-xs text-gray-400 dark:text-gray-500 mt-4"> {/* Adjusted dark text */}
-            <span>By <span className="font-medium text-gray-500 dark:text-gray-300">{author}</span></span> {/* Adjusted dark text */}
+          <div className="flex justify-between items-center text-xs text-gray-400 dark:text-gray-500 mt-4">
+            {" "}
+            {/* Adjusted dark text */}
+            <span>
+              By{" "}
+              <span className="font-medium text-gray-500 dark:text-gray-300">
+                {author}
+              </span>
+            </span>{" "}
+            {/* Adjusted dark text */}
             <span>{date}</span>
           </div>
         </div>
